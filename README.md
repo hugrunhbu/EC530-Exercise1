@@ -10,4 +10,4 @@ Hi I'm supposed to write a little bit about myself here so here are 5 facts abou
 
 NOTE: when running the C++ code I needed to write g++ -std=c++17 -o main mainfile.cpp not just g++ -o main mainfile.cpp
 
-NOTE: unsurprisingly did I find out that London was the closes european city to all the american cities except for Miami that is the closest to Madrid
+NOTE: unsurprisingly did I find out that London was the closest european city to all the american cities except for Miami that is the closest to Madrid
