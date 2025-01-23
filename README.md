@@ -7,3 +7,5 @@ Hi I'm supposed to write a little bit about myself here so here are 5 facts abou
 3. I don't know what I want to do with my life when I graduate
 4. I play soccer here and now it's over since we are a fall sport and I'm a senior
 5. I miss it but I also love to have some free time now
+
+NOTE: when running the C++ code I needed to write g++ -std=c++17 -o main mainfile.cpp not just g++ -o main mainfile.cpp
