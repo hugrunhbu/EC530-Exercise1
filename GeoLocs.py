@@ -46,6 +46,42 @@ def haversine(lat1, lon1, lat2, lon2):
 
     return R * c    # distance in kilometers
 
+# function to load city data from the CSV file
+def load_city_database(file_path):
+    city_database = {}
+    with open(file_path, "r", encoding="utf-8") as file:
+        reader = csv.reader(file) 
+        next(reader)    # skip the first (header) row
+
+        for row in reader:
+            try:
+                city = row[0].strip()
+                country = row[1].strip()
+                lat = convert_to_decimal(row[2].strip())
+                lon = convert_to_decimal(row[3].strip())
+                city_database[(round(lat,4), round(lon,4))] = city
+            except (IndexError, ValueError):
+                print(f"Skipping invalid row: {row}")
+    
+    return city_database
+        
+# function to find the closest city for a given latitude and longitude
+"""def find_closest_city(lat, lon, city_database):
+
+    # if the exact match isn't found, it finds the closest approximate match
+
+    closest_city = None
+    min_distance = float('inf')
+
+    for (city_lat, city_lon), city_name in city_database.items():
+        dist = haversine(lat, lon, city_lat, city_lon)
+        if dist < min_distance:
+            min_distance = dist
+            closest_city = city_name
+
+    return closest_city, min_distance
+"""
+
 # function that validates the ranges of the lat and lon (error checking)
 def validate_lat_lon(lat, lon):
     if not (-90 <= lat <= 90):
@@ -92,10 +128,15 @@ def match_closest_points(set1, set2):
                 closest_point = (lat2, lon2)
 
         matched_points.append((lat1, lon1, closest_point[0], closest_point[1], min_distance))
-    print(matched_points)
     return matched_points
 
+# function to get the city name from the database
+def get_city_name(lat, lon, city_database):
+    return city_database.get((round(lat,4), round(lon, 4)), "Unknown location")
+
 # main program
+
+city_database = load_city_database(file_path)
     
 set1 = get_user_input("Set 1")
 set2 = get_user_input("Set 2")
@@ -103,11 +144,10 @@ set2 = get_user_input("Set 2")
 # find the closest matches
 matched_results = match_closest_points(set1, set2)
 
-# Display results
+# Display results with city names
 print("\nClosest Matches:")
 print("-" * 55)
-print(f"{'Lat1':<12}{'Lon1':<12}  ->  {'Closest Lat':<12}{'Closest Lon':<12}  {'Distance (km)':<10}")
-print("-" * 55)
-for match in matched_results:
-    lat1, lon1, lat2, lon2, distance = match
-    print(f"{lat1:<12.4f}{lon1:<12.4f}  ->  {lat2:<12.4f}{lon2:<12.4f}  {distance:<10.2f}")
+for lat1, lon1, lat2, lon2, distance in matched_results:
+    city1 = get_city_name(lat1, lon1, city_database)
+    city2 = get_city_name(lat2, lon2, city_database)
+    print(f"{city1} is the closest to {city2} ({distance:.2f} km)")
