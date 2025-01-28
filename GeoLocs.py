@@ -7,7 +7,7 @@ def convert_to_decimal(coord):
     # converts latitude or longitude from directional format (e.g., 40.7128 N)
     # or decimal format (e.g., 51.5074) to a standard decimal degree format
 
-    coord = coord.strip()
+    coord = coord.strip().lower().replace("degrees", "").strip()
 
     # check for a format with direction (e.g., 40.7128° N)
     match = re.match(r"([\d.]+)\s*°?\s*([NSWE])?", coord, re.IGNORECASE)
@@ -55,6 +55,7 @@ def get_user_input(set_name):
     
     locations = []
     print(f"\nEnter {set_name} locations (format: Latitude, Longitude)")
+    print("make sure to seperate the latitude and longitude with a comma")
     print("Examples: 40.7128° N, 74.0060° W OR 51.5074, -0.1278")
     print("Type 'done' when finished.")
 
