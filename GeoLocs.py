@@ -1,5 +1,9 @@
 import math
 import re
+import csv
+
+# path to the uploaded CSV file
+file_path = "Major_Cities_GPS.csv" # in the same folder as GeoLocs.py
 
 # function to convert given format to decimal degrees
 def convert_to_decimal(coord):
