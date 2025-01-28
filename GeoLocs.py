@@ -1,9 +1,21 @@
 import math
 import re
 import csv
+import urllib.request
 
-# path to the uploaded CSV file
-file_path = "Major_Cities_GPS.csv" # in the same folder as GeoLocs.py
+url = "https://raw.githubusercontent.com/joelacus/world-cities/refs/heads/main/world_cities.csv"
+
+file_name = "world_cities.csv"
+
+# download and save the file
+try:
+    urllib.request.urlretrieve(url, file_name)
+    print(f"CSV file saved as: {file_name}")
+except Exception as e:
+    print(f"Failed to download file: {e}")
+
+# path to the uploaded CSV file NOTE: WRONG FILE
+# file_path = "Major_Cities_GPS.csv" # in the same folder as GeoLocs.py
 
 # function to convert given format to decimal degrees
 def convert_to_decimal(coord):
@@ -47,19 +59,19 @@ def haversine(lat1, lon1, lat2, lon2):
     return R * c    # distance in kilometers
 
 # function to load city data from the CSV file
-def load_city_database(file_path):
+def load_city_database(file_name):
     city_database = {}
-    with open(file_path, "r", encoding="utf-8") as file:
+    with open(file_name, "r", encoding="utf-8") as file:
         reader = csv.reader(file) 
         next(reader)    # skip the first (header) row
 
         for row in reader:
             try:
-                city = row[0].strip()
-                country = row[1].strip()
+                country = row[0].strip()
+                name = row[1].strip()
                 lat = convert_to_decimal(row[2].strip())
                 lon = convert_to_decimal(row[3].strip())
-                city_database[(round(lat,4), round(lon,4))] = city
+                city_database[(round(lat,4), round(lon,4))] = name, country
             except (IndexError, ValueError):
                 print(f"Skipping invalid row: {row}")
     
@@ -136,7 +148,7 @@ def get_city_name(lat, lon, city_database):
 
 # main program
 
-city_database = load_city_database(file_path)
+city_database = load_city_database(file_name)
     
 set1 = get_user_input("Set 1")
 set2 = get_user_input("Set 2")
