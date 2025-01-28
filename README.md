@@ -10,3 +10,4 @@ I am currently working on improving my code in these ways:
 3. looking at the CPU times
 4. Improving efficiency by some algorithm rather than testing every location in array 1 against every location in array 2
 5. Creating good test files and checking how the coverage changes
+6. figure out how to do pytest in visual studio without the github actions.
