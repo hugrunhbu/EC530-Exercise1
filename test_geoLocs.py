@@ -4,7 +4,7 @@ import math
 import csv
 
 # Import the functions to be tested
-from your_module import convert_to_decimal, haversine, validate_lat_lon, match_closest_points, get_city_name, load_city_database
+from GeoLocs import convert_to_decimal, haversine, validate_lat_lon, match_closest_points, get_city_name, load_city_database
 
 class TestGeoFunctions(unittest.TestCase):
     
